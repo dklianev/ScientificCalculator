@@ -1,0 +1,25 @@
+# Build artifacts
+bin/
+obj/
+/TestResults/
+
+# Visual Studio / IDE
+.vs/
+*.suo
+*.user
+*.userprefs
+*.csproj.user
+*.sln.docstates
+*.vsidx
+*.v2
+/.idea/
+/.vscode/
+
+# Tools / temp
+*.tmp
+*.bak
+*.log
+
+# OS junk
+Thumbs.db
+.DS_Store
