@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace ScientificCalculator
 {
+    // Главната форма, която свързва потребителския интерфейс с логиката.
     public partial class MainForm : Form
     {
         // Private полета за компонентите на калкулатора
@@ -25,12 +26,14 @@ namespace ScientificCalculator
         private string currentOperator;
         private double firstOperand;
 
+        // Конструкторът настройва формата и инициализира компонентите.
         public MainForm()
         {
             InitializeComponent();
             InitializeCalculator();
         }
 
+        // Създава основните обекти и подготвя началното състояние.
         private void InitializeCalculator()
         {
             // Създаване на обектите
@@ -53,6 +56,7 @@ namespace ScientificCalculator
             InitializeConverterUnits();
         }
 
+        // Зарежда списъците с мерни единици в комбобоксовете.
         private void InitializeConverterUnits()
         {
             // Температура
@@ -76,6 +80,7 @@ namespace ScientificCalculator
             if (cmbToUnitWeight.Items.Count > 0) cmbToUnitWeight.SelectedIndex = 1;
         }
 
+        // Обработва натискането на номер и го добавя към дисплея.
         private void NumberButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -91,6 +96,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Добавя десетична точка към текущия вход.
         private void BtnDecimal_Click(object sender, EventArgs e)
         {
             if (isNewCalculation)
@@ -104,6 +110,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Запазва състоянието при избор на оператор (+, -, *, /, ^).
         private void OperatorButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -118,11 +125,13 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Изчислява резултата при натиснато "=".
         private void BtnEquals_Click(object sender, EventArgs e)
         {
             CalculateResult();
         }
 
+        // Извършва текущо избраната операция и обновява историята.
         private void CalculateResult()
         {
             if (currentOperator == "")
@@ -152,6 +161,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Нулира калкулатора и дисплея.
         private void BtnClear_Click(object sender, EventArgs e)
         {
             calculator.Clear();
@@ -160,12 +170,14 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Изчиства само текущия вход.
         private void BtnClearEntry_Click(object sender, EventArgs e)
         {
             txtDisplay.Text = "0";
             isNewCalculation = true;
         }
 
+        // Смяна на знака на текущата стойност.
         private void BtnPlusMinus_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -174,6 +186,7 @@ namespace ScientificCalculator
 
         // ===== НАУЧНИ ОПЕРАЦИИ =====
 
+        // Пресмята синуса на текущата стойност (в градуси).
         private void BtnSin_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -183,6 +196,7 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Пресмята косинуса на текущата стойност.
         private void BtnCos_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -192,6 +206,7 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Пресмята тангенса на текущата стойност.
         private void BtnTan_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -201,6 +216,7 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Пресмята квадратен корен с обработка на грешки.
         private void BtnSqrt_Click(object sender, EventArgs e)
         {
             try
@@ -217,6 +233,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Вдига стойността на квадрат.
         private void BtnSquare_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -226,6 +243,7 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Подготвя калкулатора за операция x^y.
         private void BtnPower_Click(object sender, EventArgs e)
         {
             firstOperand = GetDisplayValue();
@@ -233,6 +251,7 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Пресмята десетичния логаритъм на стойността.
         private void BtnLog_Click(object sender, EventArgs e)
         {
             try
@@ -249,6 +268,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Пресмята натуралния логаритъм на стойността.
         private void BtnLn_Click(object sender, EventArgs e)
         {
             try
@@ -267,6 +287,7 @@ namespace ScientificCalculator
 
         // ===== ПАМЕТ =====
 
+        // Добавя текущата стойност в паметта (M+).
         private void BtnMemoryAdd_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -274,6 +295,7 @@ namespace ScientificCalculator
             history.AddRecord("M+ " + FormatValue(value));
         }
 
+        // Изважда стойността от паметта (M-).
         private void BtnMemorySubtract_Click(object sender, EventArgs e)
         {
             double value = GetDisplayValue();
@@ -281,6 +303,7 @@ namespace ScientificCalculator
             history.AddRecord("M- " + FormatValue(value));
         }
 
+        // Визуализира записаната стойност (MR).
         private void BtnMemoryRecall_Click(object sender, EventArgs e)
         {
             double value = memory.MemoryRecall();
@@ -288,6 +311,7 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Нулира паметта (MC).
         private void BtnMemoryClear_Click(object sender, EventArgs e)
         {
             memory.MemoryClear();
@@ -296,6 +320,7 @@ namespace ScientificCalculator
 
         // ===== КОНВЕРТОР =====
 
+        // Конвертира температура между избраните единици.
         private void BtnConvertTemp_Click(object sender, EventArgs e)
         {
             try
@@ -317,6 +342,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Конвертира дължина между избраните единици.
         private void BtnConvertLength_Click(object sender, EventArgs e)
         {
             try
@@ -338,6 +364,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Конвертира тегло между избраните единици.
         private void BtnConvertWeight_Click(object sender, EventArgs e)
         {
             try
@@ -359,6 +386,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Изчиства визуалната история в списъка.
         private void BtnClearHistory_Click(object sender, EventArgs e)
         {
             history.ClearHistory();
@@ -367,23 +395,27 @@ namespace ScientificCalculator
 
         // ===== HELPER МЕТОДИ =====
 
+        // Форматира числата така, че да изглеждат еднакво в UI.
         private string FormatValue(double value)
         {
             double rounded = Math.Round(value, 10);
             return rounded.ToString("0.##########", CultureInfo.InvariantCulture);
         }
 
+        // Чете стойността от дисплея и я превръща към double.
         private double GetDisplayValue()
         {
             string normalized = txtDisplay.Text.Replace(',', '.');
             return double.Parse(normalized, CultureInfo.InvariantCulture);
         }
 
+        // Обновява съдържанието на дисплея при събитие.
         private void UpdateDisplay(string value)
         {
             txtDisplay.Text = value;
         }
 
+        // Показва съобщение за грешка и нулира дисплея.
         private void ShowError(string errorMessage)
         {
             MessageBox.Show(errorMessage, "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -391,11 +423,13 @@ namespace ScientificCalculator
             isNewCalculation = true;
         }
 
+        // Добавя отримания запис към визуалния списък.
         private void AddToHistoryList(string record)
         {
             lstHistory.Items.Insert(0, record);
         }
 
+        // Показва или скрива индикатора за памет според стойността.
         private void UpdateMemoryIndicator(double memoryValue)
         {
             if (memoryValue != 0)

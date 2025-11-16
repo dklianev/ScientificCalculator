@@ -10,6 +10,7 @@ using System.Collections;
 
 namespace ScientificCalculator
 {
+    // Класът управлява основните аритметични операции и състоянието на калкулатора.
     public class Calculator
     {
         private double currentValue;
@@ -37,6 +38,7 @@ namespace ScientificCalculator
 
         public event DisplayUpdateHandler OnDisplayUpdate;
 
+        // Създава калкулатор със стойности по подразбиране.
         public Calculator()
         {
             currentValue = 0;
@@ -45,6 +47,7 @@ namespace ScientificCalculator
             InitializeOperations();
         }
 
+        // Позволява стартова стойност за дисплея.
         public Calculator(double initialValue)
         {
             currentValue = initialValue;
@@ -53,6 +56,7 @@ namespace ScientificCalculator
             InitializeOperations();
         }
 
+        // Нулира стойностите и информира дисплея.
         public virtual void Clear()
         {
             currentValue = 0;
@@ -61,6 +65,7 @@ namespace ScientificCalculator
             OnDisplayUpdate?.Invoke("0");
         }
 
+        // Избира подходящата операция по символ и я изпълнява.
         public virtual double ExecuteOperation(double a, double b, string operation)
         {
             if (!operations.ContainsKey(operation))
@@ -72,6 +77,7 @@ namespace ScientificCalculator
             return selectedOperation.Execute(a, b);
         }
 
+        // Регистрира поддържаните операции в колекцията.
         private void InitializeOperations()
         {
             operations = new SortedList();

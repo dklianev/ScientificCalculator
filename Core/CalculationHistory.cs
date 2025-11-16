@@ -10,17 +10,20 @@ using System.Collections;
 
 namespace ScientificCalculator
 {
+    // Управлява списъка с изчисленията, които се показват във формата.
     public class CalculationHistory : IHistoryManager
     {
         private ArrayList historyRecords;
 
         public event HistoryUpdateHandler OnHistoryUpdate;
 
+        // Създава празна история.
         public CalculationHistory()
         {
             historyRecords = new ArrayList();
         }
 
+        // Добавя запис с час и уведомява абонатите.
         public void AddRecord(string record)
         {
             if (string.IsNullOrEmpty(record))
@@ -33,11 +36,13 @@ namespace ScientificCalculator
             OnHistoryUpdate?.Invoke(timestampedRecord);
         }
 
+        // Връща копие на наличните записи.
         public ArrayList GetHistory()
         {
             return (ArrayList)historyRecords.Clone();
         }
 
+        // Изчиства историята и уведомява UI.
         public void ClearHistory()
         {
             historyRecords.Clear();

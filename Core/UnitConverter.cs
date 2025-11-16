@@ -9,12 +9,14 @@ using System;
 
 namespace ScientificCalculator
 {
+    // Класът конвертира стойности между различни мерни единици.
     public class UnitConverter : IConverter
     {
         private readonly string[] temperatureUnits;
         private readonly string[] lengthUnits;
         private readonly string[] weightUnits;
 
+        // Попълва наличните единици за всеки тип конвертор.
         public UnitConverter()
         {
             temperatureUnits = new string[] { "Celsius", "Fahrenheit", "Kelvin" };
@@ -22,6 +24,7 @@ namespace ScientificCalculator
             weightUnits = new string[] { "Килограми", "Грамове", "Тонове", "Милиграми", "Фунтове", "Унции" };
         }
 
+        // Определя типа на входните единици и изпраща стойността към съответния метод.
         public double Convert(double value, string fromUnit, string toUnit)
         {
             if (IsUnitOf(temperatureUnits, fromUnit) && IsUnitOf(temperatureUnits, toUnit))
@@ -42,11 +45,13 @@ namespace ScientificCalculator
             throw new ArgumentException("Неподдържани мерни единици");
         }
 
+        // Проверява дали дадена единица присъства в списъка.
         private bool IsUnitOf(string[] units, string value)
         {
             return Array.IndexOf(units, value) >= 0;
         }
 
+        // Преобразува температури, използвайки междинна стойност в градуси Целзий.
         private double ConvertTemperature(double value, string fromUnit, string toUnit)
         {
             double celsius;
@@ -84,18 +89,21 @@ namespace ScientificCalculator
             throw new ArgumentException("Непозната температурна единица");
         }
 
+        // Преобразува дължини, като първо ги превръща в метри.
         private double ConvertLength(double value, string fromUnit, string toUnit)
         {
             double meters = value * GetLengthFactor(fromUnit);
             return meters / GetLengthFactor(toUnit);
         }
 
+        // Преобразува тегло, като използва килограм като базова единица.
         private double ConvertWeight(double value, string fromUnit, string toUnit)
         {
             double kilograms = value * GetWeightFactor(fromUnit);
             return kilograms / GetWeightFactor(toUnit);
         }
 
+        // Връща коефициент за преобразуване към метри.
         private double GetLengthFactor(string unit)
         {
             switch (unit)
@@ -112,6 +120,7 @@ namespace ScientificCalculator
             }
         }
 
+        // Връща коефициент за преобразуване към килограми.
         private double GetWeightFactor(string unit)
         {
             switch (unit)
@@ -126,16 +135,19 @@ namespace ScientificCalculator
             }
         }
 
+        // Връща списък с поддържаните температурни единици.
         public string[] GetTemperatureUnits()
         {
             return (string[])temperatureUnits.Clone();
         }
 
+        // Връща списък с поддържаните единици за дължина.
         public string[] GetLengthUnits()
         {
             return (string[])lengthUnits.Clone();
         }
 
+        // Връща списък с поддържаните единици за тегло.
         public string[] GetWeightUnits()
         {
             return (string[])weightUnits.Clone();
